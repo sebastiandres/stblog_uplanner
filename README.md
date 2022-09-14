@@ -1,36 +1,26 @@
-# Streamlit Template
+# README
 
-This is a template for streamlit projects. You can modify it at will.
+This is a simplified version of the streamlit apps developped at uPlanner. 
+I hope you find it useful as a starting point! This app is mentioned on the [streamlit post](https://blog.streamlit.io/)
 
 # Customize
 
-Edit `/streamlit_app.py`, `/public/*.py` and  `/private/*.py` to customize this app.
+You can download or fork the code from the [https://github.com/sebastiandres/stblog_uplanner](github repository).
 
 # Online demo
 
 To see an online demo, use this link:
 
-[https://stbook-template.streamlitapp.com/](https://stbook-template.streamlitapp.com/)
+[https://st-uplanner.streamlitapp.com/](https://st-uplanner.streamlitapp.com/)
+
+## Install
+
+See file INSTALL.md for installation instructions.
 
 ## Local run
 
 To locally run the app:
 
 ```
-virtualenv venv
-source venv/bin/activate
-pip install -r requirements.txt
 streamlit run streamlit_app.py
 ```
-
-## Authentication
-
-Don't forget to add a `.streamlit/secrets.toml` with the desired credentials like this:
-
-```
-USER = "my_username"
-PASSWORD = "my_password"
-```
-
-(Or edit the settings on share.streamlit.io, if deployed there.)
-
