@@ -95,7 +95,7 @@ def file_basic_validation(uploaded_file, expected_extensions, expected_columns, 
                 is_file_ok = False
     return expander_header, expander_content, is_file_ok
 
-def read_uploaded_csv(uploaded_csv_file, dtype=str):
+def read_uploaded_csv(uploaded_csv_file, encoding="infer", separator="infer", dtype=None):
     """
     Reads an uploaded csv
     """
@@ -108,13 +108,46 @@ def read_uploaded_csv(uploaded_csv_file, dtype=str):
         with open(uploaded_csv_file, "rb") as file_handler:
             data = file_handler.read()
         filename = uploaded_csv_file
+    # Save the properties for reading the file
+    read_csv_params = {}
     # Guess the encoding
-    analysis = chardet.detect(data[:10000])
-    #print(f"Char analysis {filename}:", analysis)
-    guessed_encoding = analysis["encoding"]
+    if encoding=="infer":
+        read_csv_params["encoding"] = infer_encoding(data[:10000])
+    else:
+        read_csv_params["encoding"] = encoding
+    # Guess the separator
+    if separator=="infer":
+        read_csv_params["sep"] = infer_separator(data[:10000])
+    else:
+        read_csv_params["sep"] = separator
+    # Match the dtype
     if dtype:
-        df = pd.read_csv(uploaded_csv_file, dtype=dtype, sep=";", encoding=guessed_encoding)
-    else: # Guess the dtype
-        df = pd.read_csv(uploaded_csv_file, sep=";", encoding=guessed_encoding)
-    #print(", ".join(df.columns))
-    return df, guessed_encoding
+        read_csv_params["dtype"] = dype
+    # Read the file
+    df = pd.read_csv(uploaded_csv_file, **read_csv_params)
+    return df, read_csv_params
+
+def infer_separator(data):
+    """
+    Guesses the separator of a csv file
+    """
+    data = str(data)
+    # Get the count of each character
+    sep_options = [",", ";", "\t"]
+    sep_count = {}
+    for sep in sep_options:
+        sep_count[sep] = data.count(sep)
+    print("sep_count", sep_count)
+    # Get the highest count
+    infer_sep = max(sep_count, key=sep_count.get)
+    # Guess the separator
+    return infer_sep
+
+def infer_encoding(data):
+    """
+    Guesses the encoding of a csv file
+    """
+    # Guess the separator
+    analysis = chardet.detect(data)
+    infer_enc = analysis["encoding"]
+    return infer_enc

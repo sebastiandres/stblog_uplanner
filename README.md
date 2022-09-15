@@ -5,7 +5,8 @@ I hope you find it useful as a starting point! This app is mentioned on the [str
 
 # Customize
 
-You can download or fork the code from the [https://github.com/sebastiandres/stblog_uplanner](github repository).
+You can download or fork the code from the 
+[https://github.com/sebastiandres/stblog_uplanner](github repository).
 
 # Online demo
 
